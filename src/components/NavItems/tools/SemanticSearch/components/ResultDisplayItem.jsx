@@ -10,7 +10,8 @@ import {
   Typography,
 } from "@mui/material";
 import { i18nLoadNamespace } from "../../../../Shared/Languages/i18nLoadNamespace";
-
+import { useTrackEvent } from "Hooks/useAnalytics";
+import { getclientId } from "components/Shared/GoogleAnalytics/MatomoAnalytics";
 const ResultDisplayItem = ({
   id,
   claim,
@@ -30,7 +31,18 @@ const ResultDisplayItem = ({
 
   const [showOriginalClaim, setShowOriginalClaim] = useState(false);
   const [showOriginalTitle, setShowOriginalTitle] = useState(false);
+  const [onclick, setOnclick] = useState();
+  const client_id = getclientId();
 
+  useTrackEvent(
+    "click",
+    "kinit",
+    "kinit result links",
+    articleUrl,
+    client_id,
+    onclick,
+    null,
+  );
   return (
     <Box width="100%" key={id}>
       <Grid container direction="row" p={2} justifyContent="space-between">
@@ -83,7 +95,13 @@ const ResultDisplayItem = ({
               <Stack direction="column">
                 <Typography>
                   {keyword("semantic_search_result_title")}{" "}
-                  <Link href={articleUrl} target="_blank">
+                  <Link
+                    href={articleUrl}
+                    target="_blank"
+                    onClick={() => {
+                      setOnclick(articleUrl);
+                    }}
+                  >
                     {showOriginalTitle ? titleOriginalLanguage : title}
                   </Link>
                 </Typography>
