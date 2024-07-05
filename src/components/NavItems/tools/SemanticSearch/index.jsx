@@ -261,7 +261,7 @@ const SemanticSearch = () => {
 
     const params = new URLSearchParams();
 
-    params.append("text", searchString);
+    params.append("text", encodeURIComponent(searchString));
     params.append("search_method", searchMethod);
     params.append("time_decay", "true");
     params.append("limit", "100");
