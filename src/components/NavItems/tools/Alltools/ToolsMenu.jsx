@@ -71,7 +71,7 @@ const ToolsMenu = () => {
   );
 
   const role = useSelector((state) => state.userSession.user.roles);
-  const betaTester = role.includes("BETA_TESTER");
+  const betaTester = role.includes(ROLES.BETA_TESTER);
 
   const [openAlert, setOpenAlert] = React.useState(false);
 
@@ -95,48 +95,60 @@ const ToolsMenu = () => {
     }
   };
 
+  const canUserSeeTool = (tool) => {
+    return (
+      !tool.rolesNeeded ||
+      (role && tool.rolesNeeded && role.includes(...tool.rolesNeeded)) ||
+      tool.rolesNeeded.includes(ROLES.LOCK)
+    );
+  };
+
   //TODO: Move this code somewhere else so that the component is easier to reuse
 
   /**
    *
    * @type {Tool[]}
    */
-  const toolsVideo = [];
+  const toolsVideo = tools.filter(
+    (tool) =>
+      tool.category === TOOLS_CATEGORIES.VIDEO.name && canUserSeeTool(tool),
+  );
 
-  /**
-   *
-   * @type {Tool[]}
-   */
-  const toolsImages = [];
+  const toolsImages = tools.filter(
+    (tool) =>
+      tool.category === TOOLS_CATEGORIES.IMAGE.name && canUserSeeTool(tool),
+  );
 
-  /**
-   *
-   * @type {Tool[]}
-   */
-  const toolsAudio = [];
+  const toolsAudio = tools.filter(
+    (tool) =>
+      tool.category === TOOLS_CATEGORIES.AUDIO.name && canUserSeeTool(tool),
+  );
 
-  /**
-   *
-   * @type {Tool[]}
-   */
-  const toolsSearch = [];
+  const toolsSearch = tools.filter(
+    (tool) =>
+      tool.category === TOOLS_CATEGORIES.SEARCH.name && canUserSeeTool(tool),
+  );
 
-  /**
-   *
-   * @type {Tool[]}
-   */
-  const toolsData = [];
+  const toolsData = tools.filter(
+    (tool) =>
+      tool.category === TOOLS_CATEGORIES.DATA_ANALYSIS.name &&
+      canUserSeeTool(tool),
+  );
 
-  /**
-   *
-   * @type {Tool[]}
-   */
-  const otherTools = [];
+  const learnTools = tools.filter(
+    (tool) =>
+      tool.category === TOOLS_CATEGORIES.LEARN.name && canUserSeeTool(tool),
+  );
 
-  const categories = [
+  const otherTools = tools.filter(
+    (tool) =>
+      tool.category === TOOLS_CATEGORIES.OTHER.name && canUserSeeTool(tool),
+  );
+
+  const toolsMenuCategories = [
     {
-      type: TOOLS_CATEGORIES.VIDEO,
-      name: keywordNavbar(TOOLS_CATEGORIES.VIDEO),
+      type: TOOLS_CATEGORIES.VIDEO.name,
+      name: keywordNavbar(TOOLS_CATEGORIES.VIDEO.name),
       value: toolsVideo,
       icon: (
         <SvgIcon
@@ -149,8 +161,8 @@ const ToolsMenu = () => {
       ),
     },
     {
-      type: TOOLS_CATEGORIES.IMAGE,
-      name: keywordNavbar(TOOLS_CATEGORIES.IMAGE),
+      type: TOOLS_CATEGORIES.IMAGE.name,
+      name: keywordNavbar(TOOLS_CATEGORIES.IMAGE.name),
       value: toolsImages,
       icon: (
         <SvgIcon
@@ -163,14 +175,14 @@ const ToolsMenu = () => {
       ),
     },
     {
-      type: TOOLS_CATEGORIES.AUDIO,
-      name: keywordNavbar(TOOLS_CATEGORIES.AUDIO),
+      type: TOOLS_CATEGORIES.AUDIO.name,
+      name: keywordNavbar(TOOLS_CATEGORIES.AUDIO.name),
       value: toolsAudio,
       icon: <Audiotrack width="40px" height="40px" />,
     },
     {
-      type: TOOLS_CATEGORIES.SEARCH,
-      name: keywordNavbar(TOOLS_CATEGORIES.SEARCH),
+      type: TOOLS_CATEGORIES.SEARCH.name,
+      name: keywordNavbar(TOOLS_CATEGORIES.SEARCH.name),
       value: toolsSearch,
       icon: (
         <SvgIcon
@@ -183,8 +195,8 @@ const ToolsMenu = () => {
       ),
     },
     {
-      type: TOOLS_CATEGORIES.DATA_ANALYSIS,
-      name: keywordNavbar(TOOLS_CATEGORIES.DATA_ANALYSIS),
+      type: TOOLS_CATEGORIES.DATA_ANALYSIS.name,
+      name: keywordNavbar(TOOLS_CATEGORIES.DATA_ANALYSIS.name),
       value: toolsData,
       icon: (
         <SvgIcon
@@ -197,49 +209,26 @@ const ToolsMenu = () => {
       ),
     },
     {
-      type: TOOLS_CATEGORIES.OTHER,
-      name: keywordNavbar(TOOLS_CATEGORIES.OTHER),
+      type: TOOLS_CATEGORIES.LEARN.name,
+      name: keywordNavbar(TOOLS_CATEGORIES.LEARN.name),
+      value: learnTools,
+      icon: (
+        <SvgIcon
+          component={DataIcon}
+          sx={{
+            fontSize: "40px",
+          }}
+          inheritViewBox
+        />
+      ),
+    },
+    {
+      type: TOOLS_CATEGORIES.OTHER.name,
+      name: keywordNavbar(TOOLS_CATEGORIES.OTHER.name),
       value: otherTools,
       icon: <MoreHorizIcon width="40px" height="40px" />,
     },
   ];
-
-  const canUserSeeTool = (tool) => {
-    return (
-      !tool.rolesNeeded ||
-      (role && tool.rolesNeeded && role.includes(...tool.rolesNeeded)) ||
-      tool.rolesNeeded.includes(ROLES.LOCK)
-    );
-  };
-
-  tools.forEach((tool) => {
-    if (tool.category === TOOLS_CATEGORIES.VIDEO && canUserSeeTool(tool)) {
-      toolsVideo.push(tool);
-    }
-
-    if (tool.category === TOOLS_CATEGORIES.IMAGE && canUserSeeTool(tool)) {
-      toolsImages.push(tool);
-    }
-
-    if (tool.category === TOOLS_CATEGORIES.AUDIO && canUserSeeTool(tool)) {
-      toolsAudio.push(tool);
-    }
-
-    if (tool.category === TOOLS_CATEGORIES.SEARCH && canUserSeeTool(tool)) {
-      toolsSearch.push(tool);
-    }
-
-    if (
-      tool.category === TOOLS_CATEGORIES.DATA_ANALYSIS &&
-      canUserSeeTool(tool)
-    ) {
-      toolsData.push(tool);
-    }
-
-    if (tool.category === TOOLS_CATEGORIES.OTHER && canUserSeeTool(tool)) {
-      otherTools.push(tool);
-    }
-  });
 
   const handleCloseAlert = (event, reason) => {
     if (reason === "clickaway") {
@@ -254,7 +243,7 @@ const ToolsMenu = () => {
     setValue(newValue);
   };
 
-  const categoriesAllowedForUser = categories.filter(
+  const categoriesAllowedForUser = toolsMenuCategories.filter(
     (category) => category.value.length !== 0,
   );
   return (
@@ -332,7 +321,7 @@ const ToolsMenu = () => {
                     );
                     if (
                       tool.rolesNeeded &&
-                      tool.rolesNeeded.includes("BETA_TESTER")
+                      tool.rolesNeeded.includes(ROLES.BETA_TESTER)
                     ) {
                       if (betaTester) {
                         return element;

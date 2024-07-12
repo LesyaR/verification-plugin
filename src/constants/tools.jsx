@@ -4,9 +4,17 @@ import { SvgIcon } from "@mui/material";
 import {
   Archive as ArchiveIcon,
   AudioFile,
+  Audiotrack,
   Gradient,
   ManageSearch,
+  MoreHoriz,
+  School,
 } from "@mui/icons-material";
+
+import VideoIcon from "../components/NavBar/images/SVG/Video/Video.svg";
+import ImageIcon from "../components/NavBar/images/SVG/Image/Images.svg";
+import SearchIcon from "../components/NavBar/images/SVG/Search/Search.svg";
+import DataIcon from "../components/NavBar/images/SVG/DataAnalysis/Data_analysis.svg";
 
 import ToolsIcon from "../components/NavBar/images/SVG/Navbar/Tools.svg";
 
@@ -53,6 +61,59 @@ import SemanticSearch from "../components/NavItems/tools/SemanticSearch";
 import TwitterSna from "../components/NavItems/tools/TwitterSna/TwitterSna";
 import Archive from "../components/NavItems/tools/Archive";
 import About from "../components/NavItems/About/About";
+import Tutorial from "../components/NavItems/tutorial/tutorial";
+
+/**
+ * Represents a group of tools used for the same type of media, or a group of tools belonging to the same category
+ */
+class ToolCategory {
+  constructor(name, icon) {
+    this.name = name;
+    this.icon = icon;
+  }
+}
+
+const videoSvgIcon = (props) => {
+  return <SvgIcon component={VideoIcon} inheritViewBox {...props} />;
+};
+
+const imageSvgIcon = (props) => {
+  return <SvgIcon component={ImageIcon} inheritViewBox {...props} />;
+};
+
+const audioSvgIcon = (props) => {
+  return <Audiotrack inheritViewBox {...props} />;
+};
+
+const searchSvgIcon = (props) => {
+  return <SvgIcon component={SearchIcon} inheritViewBox {...props} />;
+};
+
+const dataAnalysisSvgIcon = (props) => {
+  return <SvgIcon component={DataIcon} inheritViewBox {...props} />;
+};
+
+const learnSvgIcon = (props) => {
+  return <School inheritViewBox {...props} />;
+};
+
+const otherSvgIcon = (props) => {
+  return <MoreHoriz inheritViewBox {...props} />;
+};
+
+const videoCategory = new ToolCategory("navbar_category_video", videoSvgIcon);
+const imageCategory = new ToolCategory("navbar_category_image", imageSvgIcon);
+const audioCategory = new ToolCategory("navbar_category_audio", audioSvgIcon);
+const searchCategory = new ToolCategory(
+  "navbar_category_search",
+  searchSvgIcon,
+);
+const dataAnalysisCategory = new ToolCategory(
+  "navbar_category_data",
+  dataAnalysisSvgIcon,
+);
+const learnCategory = new ToolCategory("navbar_category_learn", learnSvgIcon);
+const otherCategory = new ToolCategory("navbar_category_other", otherSvgIcon);
 
 /**
  * Represents the categories to which the tools belong
@@ -60,12 +121,13 @@ import About from "../components/NavItems/About/About";
  * @type {{OTHER: string, ALL: string, IMAGE: string, VIDEO: string, SEARCH: string, DATA_ANALYSIS: string, AUDIO: string}}
  */
 export const TOOLS_CATEGORIES = {
-  VIDEO: "navbar_category_video",
-  IMAGE: "navbar_category_image",
-  AUDIO: "navbar_category_audio",
-  SEARCH: "navbar_category_search",
-  DATA_ANALYSIS: "navbar_category_data",
-  OTHER: "navbar_category_other",
+  VIDEO: videoCategory,
+  IMAGE: imageCategory,
+  AUDIO: audioCategory,
+  SEARCH: searchCategory,
+  DATA_ANALYSIS: dataAnalysisCategory,
+  LEARN: learnCategory,
+  OTHER: otherCategory,
 
   // Used to display the home page
   ALL: "navbar_category_general",
@@ -269,7 +331,7 @@ const videoAnalysis = new Tool(
   "navbar_analysis_video",
   "navbar_analysis_description",
   AnalysisSvgIcon,
-  TOOLS_CATEGORIES.VIDEO,
+  TOOLS_CATEGORIES.VIDEO.name,
   null,
   null,
   "analysis",
@@ -282,7 +344,7 @@ const keyframes = new Tool(
   "navbar_keyframes",
   "navbar_keyframes_description",
   KeyframesSvgIcon,
-  TOOLS_CATEGORIES.VIDEO,
+  TOOLS_CATEGORIES.VIDEO.name,
   null,
   null,
   "keyframes",
@@ -295,7 +357,7 @@ const thumbnails = new Tool(
   "navbar_thumbnails",
   "navbar_thumbnails_description",
   thumbnailsSvgIcon,
-  TOOLS_CATEGORIES.VIDEO,
+  TOOLS_CATEGORIES.VIDEO.name,
   null,
   null,
   "thumbnails",
@@ -308,7 +370,7 @@ const videoRights = new Tool(
   "navbar_rights",
   "navbar_rights_description",
   videoRightsSvgIcon,
-  TOOLS_CATEGORIES.VIDEO,
+  TOOLS_CATEGORIES.VIDEO.name,
   null,
   null,
   "copyright",
@@ -321,7 +383,7 @@ const videoMetadata = new Tool(
   "navbar_metadata_video",
   "navbar_metadata_description",
   metadataSvgIcon,
-  TOOLS_CATEGORIES.VIDEO,
+  TOOLS_CATEGORIES.VIDEO.name,
   null,
   null,
   "metadata",
@@ -334,7 +396,7 @@ const videoDeepfake = new Tool(
   "navbar_deepfake_video",
   "navbar_deepfake_video_description",
   deepfakeSvgIcon,
-  TOOLS_CATEGORIES.VIDEO,
+  TOOLS_CATEGORIES.VIDEO.name,
   [TOOL_STATUS_ICON.EXPERIMENTAL],
   [ROLES.BETA_TESTER],
   "deepfakeVideo",
@@ -351,7 +413,7 @@ const imageAnalysis = new Tool(
   "navbar_analysis_image",
   "navbar_analysis_image_description",
   imageAnalysisSvgIcon,
-  TOOLS_CATEGORIES.IMAGE,
+  TOOLS_CATEGORIES.IMAGE.name,
   null,
   null,
   "analysisImage",
@@ -364,7 +426,7 @@ const imageMagnifier = new Tool(
   "navbar_magnifier",
   "navbar_magnifier_description",
   magnifierSvgIcon,
-  TOOLS_CATEGORIES.IMAGE,
+  TOOLS_CATEGORIES.IMAGE.name,
   null,
   null,
   "magnifier",
@@ -377,7 +439,7 @@ const imageMetadata = new Tool(
   "navbar_metadata_image",
   "navbar_metadata_description",
   metadataSvgIcon,
-  TOOLS_CATEGORIES.IMAGE,
+  TOOLS_CATEGORIES.IMAGE.name,
   null,
   null,
   "metadata_image",
@@ -390,7 +452,7 @@ const imageForensic = new Tool(
   "navbar_forensic",
   "navbar_forensic_description",
   forensicSvgIcon,
-  TOOLS_CATEGORIES.IMAGE,
+  TOOLS_CATEGORIES.IMAGE.name,
   null,
   null,
   "forensic",
@@ -403,7 +465,7 @@ const imageOcr = new Tool(
   "navbar_ocr",
   "navbar_ocr_description",
   ocrSvgIcon,
-  TOOLS_CATEGORIES.IMAGE,
+  TOOLS_CATEGORIES.IMAGE.name,
   null,
   null,
   "ocr",
@@ -416,7 +478,7 @@ const imageGif = new Tool(
   "navbar_gif",
   "navbar_gif_description",
   gifSvgIcon,
-  TOOLS_CATEGORIES.IMAGE,
+  TOOLS_CATEGORIES.IMAGE.name,
   [TOOL_STATUS_ICON.LOCK],
   [ROLES.LOCK],
   "gif",
@@ -429,7 +491,7 @@ const imageSyntheticDetection = new Tool(
   "navbar_synthetic_image_detection",
   "navbar_synthetic_image_detection_description",
   syntheticImageSvgIcon,
-  TOOLS_CATEGORIES.IMAGE,
+  TOOLS_CATEGORIES.IMAGE.name,
   [TOOL_STATUS_ICON.NEW, TOOL_STATUS_ICON.EXPERIMENTAL, TOOL_STATUS_ICON.LOCK],
   [ROLES.BETA_TESTER],
   "syntheticImageDetection",
@@ -442,7 +504,7 @@ const imageDeepfake = new Tool(
   "navbar_deepfake_image",
   "navbar_deepfake_image_description",
   deepfakeSvgIcon,
-  TOOLS_CATEGORIES.IMAGE,
+  TOOLS_CATEGORIES.IMAGE.name,
   [TOOL_STATUS_ICON.EXPERIMENTAL, TOOL_STATUS_ICON.LOCK],
   [ROLES.BETA_TESTER],
   "deepfakeImage",
@@ -455,7 +517,7 @@ const imageGeolocation = new Tool(
   "navbar_geolocation",
   "navbar_geolocation_description",
   geolocationSvgIcon,
-  TOOLS_CATEGORIES.IMAGE,
+  TOOLS_CATEGORIES.IMAGE.name,
   [TOOL_STATUS_ICON.EXPERIMENTAL, TOOL_STATUS_ICON.LOCK],
   [ROLES.BETA_TESTER],
   "geolocation",
@@ -472,7 +534,7 @@ const audioLoccus = new Tool(
   "navbar_loccus",
   "navbar_loccus_description",
   audioFileSvgIcon,
-  TOOLS_CATEGORIES.AUDIO,
+  TOOLS_CATEGORIES.AUDIO.name,
   [TOOL_STATUS_ICON.NEW, TOOL_STATUS_ICON.EXPERIMENTAL, TOOL_STATUS_ICON.LOCK],
   [ROLES.BETA_TESTER],
   "loccus",
@@ -489,7 +551,7 @@ const searchTwitter = new Tool(
   "navbar_twitter",
   "navbar_twitter_description",
   twitterSearchSvgIcon,
-  TOOLS_CATEGORIES.SEARCH,
+  TOOLS_CATEGORIES.SEARCH.name,
   null,
   null,
   "twitter",
@@ -502,7 +564,7 @@ const searchSemantic = new Tool(
   "navbar_semantic_search",
   "navbar_semantic_search_description",
   manageSearchSvgIcon,
-  TOOLS_CATEGORIES.SEARCH,
+  TOOLS_CATEGORIES.SEARCH.name,
   [TOOL_STATUS_ICON.EXPERIMENTAL, TOOL_STATUS_ICON.NEW, TOOL_STATUS_ICON.LOCK],
   [ROLES.LOCK],
   "semanticSearch",
@@ -515,7 +577,7 @@ const searchCovid = new Tool(
   "navbar_covidsearch",
   "navbar_covidsearch_description",
   covidSearchSvgIcon,
-  TOOLS_CATEGORIES.SEARCH,
+  TOOLS_CATEGORIES.SEARCH.name,
   null,
   null,
   "factcheck",
@@ -528,7 +590,7 @@ const searchXnetwork = new Tool(
   "navbar_xnetwork",
   "navbar_xnetwork_description",
   xnetworkSvgIcon,
-  TOOLS_CATEGORIES.SEARCH,
+  TOOLS_CATEGORIES.SEARCH.name,
   null,
   null,
   "xnetwork",
@@ -545,7 +607,7 @@ const dataAnalysisSna = new Tool(
   "navbar_twitter_sna",
   "navbar_twitter_sna_description",
   twitterSnaSvgIcon,
-  TOOLS_CATEGORIES.DATA_ANALYSIS,
+  TOOLS_CATEGORIES.DATA_ANALYSIS.name,
   [TOOL_STATUS_ICON.LOCK],
   [ROLES.LOCK],
   "twitterSna",
@@ -558,12 +620,28 @@ const dataAnalysisCrowdtangle = new Tool(
   "navbar_twitter_crowdtangle",
   "navbar_twitter_crowdtangle_description",
   csvSnaSvgIcon,
-  TOOLS_CATEGORIES.DATA_ANALYSIS,
+  TOOLS_CATEGORIES.DATA_ANALYSIS.name,
   null,
   null,
   "csvSna",
   TOOL_GROUPS.VERIFICATION,
   null,
+  null,
+);
+
+/**
+ * Learn tools
+ **/
+const tutorial = new Tool(
+  "navbar_tuto",
+  "navbar_tuto_description",
+  csvSnaSvgIcon,
+  TOOLS_CATEGORIES.LEARN.name,
+  null,
+  null,
+  "csvSna",
+  TOOL_GROUPS.VERIFICATION,
+  <Tutorial />,
   null,
 );
 
@@ -575,7 +653,7 @@ const archiving = new Tool(
   "navbar_archiving",
   "navbar_archiving_description",
   archiveSvgIcon,
-  TOOLS_CATEGORIES.OTHER,
+  TOOLS_CATEGORIES.OTHER.name,
   [TOOL_STATUS_ICON.EXPERIMENTAL, TOOL_STATUS_ICON.NEW, TOOL_STATUS_ICON.LOCK],
   [ROLES.ARCHIVE],
   "archive",
@@ -625,6 +703,7 @@ export const tools = Object.freeze([
   searchXnetwork,
   dataAnalysisSna,
   dataAnalysisCrowdtangle,
+  tutorial,
   archiving,
   about,
 ]);

@@ -142,7 +142,7 @@ const SideMenu = ({ tools, setOpenAlert }) => {
       return;
     }
 
-    if (tool.category === TOOLS_CATEGORIES.OTHER) {
+    if (tool.category === TOOLS_CATEGORIES.OTHER.name) {
       navigate("/app/tools/" + tool.path);
       handleToolChange(tool);
       return;
@@ -162,13 +162,13 @@ const SideMenu = ({ tools, setOpenAlert }) => {
 
   //Video items
   const drawerItemsVideo = tools.filter(
-    (tool) => tool.category === TOOLS_CATEGORIES.VIDEO,
+    (tool) => tool.category === TOOLS_CATEGORIES.VIDEO.name,
   );
   const [openListVideo, setOpenListVideo] = useState(() => {
     const tool = tools.filter(
       (tool) => tool.titleKeyword === selectedToolTitleKeyword,
     )[0];
-    return tool.category === TOOLS_CATEGORIES.VIDEO;
+    return tool.category === TOOLS_CATEGORIES.VIDEO.name;
   });
   const [classBorderVideo, setClassBorderVideo] = useState(null);
 
@@ -184,7 +184,7 @@ const SideMenu = ({ tools, setOpenAlert }) => {
 
   //Image items
   const drawerItemsImage = tools.filter(
-    (tool) => tool.category === TOOLS_CATEGORIES.IMAGE,
+    (tool) => tool.category === TOOLS_CATEGORIES.IMAGE.name,
   );
   const [openListImage, setOpenListImage] = useState(false);
   const [classBorderImage, setClassBorderImage] = useState(null);
@@ -201,7 +201,7 @@ const SideMenu = ({ tools, setOpenAlert }) => {
 
   //Audio items
   const drawerItemsAudio = tools.filter(
-    (tool) => tool.category === TOOLS_CATEGORIES.AUDIO,
+    (tool) => tool.category === TOOLS_CATEGORIES.AUDIO.name,
   );
   const [openListAudio, setOpenListAudio] = useState(false);
   const [classBorderAudio, setClassBorderAudio] = useState(null);
@@ -218,7 +218,7 @@ const SideMenu = ({ tools, setOpenAlert }) => {
 
   //Search items
   const drawerItemsSearch = tools.filter(
-    (tool) => tool.category === TOOLS_CATEGORIES.SEARCH,
+    (tool) => tool.category === TOOLS_CATEGORIES.SEARCH.name,
   );
   const [openListSearch, setOpenListSearch] = useState(false);
   const [classBorderSearch, setClassBorderSearch] = useState(null);
@@ -235,7 +235,7 @@ const SideMenu = ({ tools, setOpenAlert }) => {
 
   //Data items
   const drawerItemsData = tools.filter(
-    (tool) => tool.category === TOOLS_CATEGORIES.DATA_ANALYSIS,
+    (tool) => tool.category === TOOLS_CATEGORIES.DATA_ANALYSIS.name,
   );
 
   const [openListData, setOpenListData] = useState(false);
@@ -252,7 +252,7 @@ const SideMenu = ({ tools, setOpenAlert }) => {
   };
 
   const drawerItemsOtherTools = tools.filter(
-    (tool) => tool.category === TOOLS_CATEGORIES.OTHER,
+    (tool) => tool.category === TOOLS_CATEGORIES.OTHER.name,
   );
   const [openListOtherTools, setOpenListOtherTools] = useState(false);
   const [classBorderOtherTools, setClassBorderOtherTools] = useState(null);
@@ -271,13 +271,13 @@ const SideMenu = ({ tools, setOpenAlert }) => {
 
   const tmpListItems = [
     {
-      titleKeyword: TOOLS_CATEGORIES.VIDEO,
+      titleKeyword: TOOLS_CATEGORIES.VIDEO.name,
       icon: (
         <VideoIcon
           width="24px"
           height="24px"
           style={{ fill: "#4c4c4c" }}
-          title={TOOLS_CATEGORIES.VIDEO}
+          title={TOOLS_CATEGORIES.VIDEO.name}
         />
       ),
       list: drawerItemsVideo,
@@ -287,13 +287,13 @@ const SideMenu = ({ tools, setOpenAlert }) => {
       classBorder: classBorderVideo,
     },
     {
-      titleKeyword: TOOLS_CATEGORIES.IMAGE,
+      titleKeyword: TOOLS_CATEGORIES.IMAGE.name,
       icon: (
         <ImageIcon
           width="24px"
           height="24px"
           style={{ fill: "#4c4c4c" }}
-          title={TOOLS_CATEGORIES.IMAGE}
+          title={TOOLS_CATEGORIES.IMAGE.name}
         />
       ),
       list: drawerItemsImage,
@@ -303,13 +303,13 @@ const SideMenu = ({ tools, setOpenAlert }) => {
       classBorder: classBorderImage,
     },
     {
-      titleKeyword: TOOLS_CATEGORIES.AUDIO,
+      titleKeyword: TOOLS_CATEGORIES.AUDIO.name,
       icon: (
         <Audiotrack
           width="24px"
           height="24px"
           style={{ fill: "#4c4c4c" }}
-          title={TOOLS_CATEGORIES.AUDIO}
+          title={TOOLS_CATEGORIES.AUDIO.name}
         />
       ),
       list: drawerItemsAudio,
@@ -319,13 +319,13 @@ const SideMenu = ({ tools, setOpenAlert }) => {
       classBorder: classBorderAudio,
     },
     {
-      titleKeyword: TOOLS_CATEGORIES.SEARCH,
+      titleKeyword: TOOLS_CATEGORIES.SEARCH.name,
       icon: (
         <SearchIcon
           width="24px"
           height="24px"
           style={{ fill: "#4c4c4c" }}
-          title={TOOLS_CATEGORIES.SEARCH}
+          title={TOOLS_CATEGORIES.SEARCH.name}
         />
       ),
       list: drawerItemsSearch,
@@ -335,13 +335,13 @@ const SideMenu = ({ tools, setOpenAlert }) => {
       classBorder: classBorderSearch,
     },
     {
-      titleKeyword: TOOLS_CATEGORIES.DATA_ANALYSIS,
+      titleKeyword: TOOLS_CATEGORIES.DATA_ANALYSIS.name,
       icon: (
         <DataIcon
           width="24px"
           height="24px"
           style={{ fill: "#4c4c4c" }}
-          title={TOOLS_CATEGORIES.DATA_ANALYSIS}
+          title={TOOLS_CATEGORIES.DATA_ANALYSIS.name}
         />
       ),
       list: drawerItemsData,
@@ -351,7 +351,7 @@ const SideMenu = ({ tools, setOpenAlert }) => {
       classBorder: classBorderData,
     },
     {
-      titleKeyword: TOOLS_CATEGORIES.OTHER,
+      titleKeyword: TOOLS_CATEGORIES.OTHER.name,
       icon: <MoreHoriz style={{ fill: "#4c4c4c" }} />,
       list: drawerItemsOtherTools,
       variableOpen: openListOtherTools,
@@ -398,7 +398,7 @@ const SideMenu = ({ tools, setOpenAlert }) => {
       isSelected =
         selectedToolTitleKeyword === tool.titleKeyword ||
         topMenuItemSelected === tool.titleKeyword;
-    } else if (tool.category !== TOOLS_CATEGORIES.OTHER) {
+    } else if (tool.category !== TOOLS_CATEGORIES.OTHER.name) {
       isSelected =
         selectedToolTitleKeyword === tool.titleKeyword &&
         topMenuItemSelected === "navbar_tools";
