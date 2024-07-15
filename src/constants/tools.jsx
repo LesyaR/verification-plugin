@@ -639,7 +639,7 @@ const tutorial = new Tool(
   TOOLS_CATEGORIES.LEARN.name,
   null,
   null,
-  "csvSna",
+  "tutorial",
   TOOL_GROUPS.VERIFICATION,
   <Tutorial />,
   null,
